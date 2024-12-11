@@ -10,7 +10,7 @@
 
             {% for speciality, specialists in specialties %}
 
-                <div class="border-b border-gray-200 pb-5">
+                <div class="border-b border-gray-200 pt-5 pb-5">
                     <h3 class="text-base font-semibold text-gray-900">{{ speciality }}</h3>
                 </div>
 
@@ -21,7 +21,7 @@
                             <img class="size-12 flex-none rounded-full bg-gray-50" src="{{ asset(specialist.profilePictureUrl) }}" alt="">
                             <div class="min-w-0 flex-auto">
                                 <p class="text-sm/6 font-semibold text-gray-900">
-                                    <a href="{{ path('app_health_specialist_show', {id: specialist.id}) }}">
+                                    <a href="{{ path('app_health_specialist_show', {healthSpecialist: specialist.id}) }}">
                                         <span class="absolute inset-x-0 -top-px bottom-0"></span>
                                         {{ specialist.fullName }}
                                     </a>
