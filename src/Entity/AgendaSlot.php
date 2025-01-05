@@ -33,6 +33,12 @@ class AgendaSlot
     #[ORM\Column(type: Types::TEXT, enumType: AgendaSlotStatus::class)]
     private AgendaSlotStatus $status;
 
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    private DateTimeImmutable $createdAt;
+
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    private DateTimeImmutable $updatedAt;
+
     public static function createOpen(Agenda $agenda, string $openingAt, string $closingAt): self
     {
         return self::create($agenda, AgendaSlotStatus::OPEN, $openingAt, $closingAt);
@@ -71,6 +77,8 @@ class AgendaSlot
         $this->status = $status;
         $this->openingAt = $openingAt;
         $this->closingAt = $closingAt;
+        $this->createdAt = new DateTimeImmutable();
+        $this->updatedAt = new DateTimeImmutable();
     }
 
     public function getId(): Uuid
@@ -106,5 +114,24 @@ class AgendaSlot
     public function setStatus(AgendaSlotStatus $status): void
     {
         $this->status = $status;
+    }
+
+    public function getCreatedAt(): DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function getUpdatedAt(): DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function book(?DateTimeInterface $bookedAt = null): void
+    {
+        // TODO: check that the status is open for booking
+        $this->status = AgendaSlotStatus::BOOKED;
+        $this->updatedAt = $bookedAt instanceof DateTimeInterface
+            ? DateTimeImmutable::createFromInterface($bookedAt)
+            : new DateTimeImmutable();
     }
 }
