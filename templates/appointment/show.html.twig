@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title "Appointment with #{specialist.fullName} on #{appointment.openingAt|date('m/d/Y')}" %}
+
+{% block page_title block('title') %}
+
+{% block body %}
+
+    <main>
+
+        <div class="mx-auto max-w-7xl mt-4 overflow-hidden rounded-lg bg-white shadow">
+
+            <div class="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
+                <div class="-ml-4 -mt-4 flex flex-wrap items-center justify-between sm:flex-nowrap">
+                    <div class="ml-4 mt-4">
+                        <div class="flex items-center">
+                            <div class="shrink-0">
+                                <img class="size-12 rounded-full" src="{{ asset(specialist.profilePictureUrl) }}" alt="">
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm text-gray-500">
+                                    {{ specialist.introduction }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ml-4 mt-4 flex shrink-0"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mx-auto max-w-7xl mt-10 overflow-hidden rounded-lg bg-white shadow">
+            <div class="px-4 py-5 sm:px-6">
+                <h2 class="text-base font-semibold text-gray-900">
+                    Appointment / <strong>{{ appointment.referenceNumber }}</strong>
+                </h2>
+            </div>
+
+            <div class="bg-gray-50 px-4 py-5 sm:p-6">
+
+                <p class="text-center">
+                    Your appointment is scheduled on <strong>{{ appointment.openingAt|date('m/d/Y') }}</strong> between <strong>{{ appointment.openingAt|date('H:i') }}</strong> and <strong>{{ appointment.closingAt|date('H:i') }}</strong>.
+                </p>
+
+            </div>
+
+            <div class="bg-gray-50 px-4 py-8 sm:px-6">
+                <!-- Add links or buttons if needed -->
+            </div>
+
+        </div>
+
+    </main>
+
+{% endblock %}
