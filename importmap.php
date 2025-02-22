@@ -16,4 +16,22 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
+    '@tailwindcss/forms' => [
+        'version' => '0.5.10',
+    ],
+    'mini-svg-data-uri' => [
+        'version' => '1.4.4',
+    ],
+    'tailwindcss/plugin' => [
+        'version' => '3.4.17',
+    ],
+    'tailwindcss/defaultTheme' => [
+        'version' => '3.4.17',
+    ],
+    'tailwindcss/colors' => [
+        'version' => '3.4.17',
+    ],
+    'picocolors' => [
+        'version' => '1.1.1',
+    ],
 ];
