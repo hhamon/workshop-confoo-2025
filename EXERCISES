@@ -1,0 +1,19 @@
+# Exercises
+
+* Add `GET /api/appointments` JSON API endpoints
+* Add `POST /api/appointment-cancellations` JSON API endpoints (provide reference + last name for validation)
+* Prevent an expired appointment from being shown
+
+* Seeding test database
+* Generating fixtures with Foundry
+* Add unit test for the MedicalAppointment entity
+* Assert when an appointment is upcoming, finished, or cancelled
+* Use Clock object to mock current time in tests
+* Add interfaces for repositories
+* Add in-memory repository implementation for testing
+* Add Doctrine repository integration test
+* Add Panther test for booking an appointment
+* Add Panther test for fetching list of appointments
+* Add Panther test for cancelling an appointment
+* Add Behat functional test for booking an appointment
+* Assert that email is sent when an appointment is booked
