@@ -78,7 +78,7 @@ final class BookAppointmentController extends AbstractController
             $this->entityManager->persist($availability);
             $this->entityManager->flush();
 
-            return $this->redirectToRoute('app_appointment_confirmation_show', [
+            return $this->redirectToRoute('app_appointment_show', [
                 'id' => (string) $appointment->getId(),
             ]);
         }

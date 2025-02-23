@@ -7,11 +7,12 @@ namespace App\Entity;
 use App\Repository\DoctrineHealthSpecialistRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Stringable;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: DoctrineHealthSpecialistRepository::class)]
-class HealthSpecialist
+class HealthSpecialist implements Stringable
 {
     #[ORM\Id]
     #[ORM\Column(type: Types::GUID)]
@@ -45,6 +46,11 @@ class HealthSpecialist
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->specialty = $specialty;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getFullName();
     }
 
     public function getId(): Uuid
