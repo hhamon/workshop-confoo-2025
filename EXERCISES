@@ -1,19 +1,76 @@
-# Exercises
+# Course
 
-* Add `GET /api/appointments` JSON API endpoints
-* Add `POST /api/appointment-cancellations` JSON API endpoints (provide reference + last name for validation)
-* Prevent an expired appointment from being shown
+## Refactoring
 
-* Seeding test database
-* Generating fixtures with Foundry
-* Add unit test for the MedicalAppointment entity
-* Assert when an appointment is upcoming, finished, or cancelled
-* Use Clock object to mock current time in tests
-* Add interfaces for repositories
+### Exercises
+
+* Leverage semantic / named class constructors
+* Leverage PHP enums
+* Leverage PHP interfaces
+
+## Unit Testing
+
+### Code Coverage
+
+See https://php.watch/articles/php-code-coverage-comparison
+
+### Time Mocking
+
+### Exercises
+
+* Add unit tests suite for the `MedicalAppointment` entity class
+* Prevent an expired appointment from being booked
+* Test when an appointment is scheduled (upcoming), past, or cancelled
 * Add in-memory repository implementation for testing
+* Create a service class for generating unique appointment reference numbers
+* Mock the database dependency in the appointment reference generator class
+
+
+## Integration Testing
+
+### Database Seeding
+
+- See https://github.com/zenstruck/foundry
+- See https://github.com/nelmio/alice
+
+### Exercises
+
+* Add integration tests for the `DoctrineMedicalAppointmentRepository` repository class
+* Seed the test database with appointments using Foundry
+* Test the `DoctrineMedicalAppointmentRepository` repository methods
+* Test the `CancelAppointment` service class
+
+## Behavioral Testing
+
+
+
+## Functional Web Testing
+
+
+
+## End-to-End Web Testing
+
+
+
+## Running Tests in Parallel
+
+
+
+
+
+
+
+
+
+
+
 * Add Doctrine repository integration test
 * Add Panther test for booking an appointment
 * Add Panther test for fetching list of appointments
 * Add Panther test for cancelling an appointment
 * Add Behat functional test for booking an appointment
 * Assert that email is sent when an appointment is booked
+* Run E2E tests in parallel with ParaTest?
+
+symfony open:local:webmail
+
