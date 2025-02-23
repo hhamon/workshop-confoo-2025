@@ -66,6 +66,13 @@ class MedicalAppointment
     #[Groups(['medical_appointment:read'])]
     private DateTimeImmutable $createdAt;
 
+    #[ORM\Column(nullable: true)]
+    #[Groups(['medical_appointment:read'])]
+    private ?DateTimeImmutable $cancelledAt = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $cancellationReason = null;
+
     // TODO: add semantic constructor to build a medical appointment from a practitioner and availability objects
     // TODO: check that practitioner is available and availability is open
 
@@ -212,5 +219,22 @@ class MedicalAppointment
     public function getCreatedAt(): DateTimeInterface
     {
         return $this->createdAt;
+    }
+
+    public function getCancelledAt(): ?DateTimeImmutable
+    {
+        return $this->cancelledAt;
+    }
+
+    public function getCancellationReason(): ?string
+    {
+        return $this->cancellationReason;
+    }
+
+    public function cancel(?DateTimeImmutable $cancelledAt = null, string $reason = ''): void
+    {
+        // TODO: check appointment is not already cancelled
+        $this->cancelledAt = $cancelledAt ?? new DateTimeImmutable();
+        $this->cancellationReason = $reason !== '' ? $reason : null;
     }
 }
