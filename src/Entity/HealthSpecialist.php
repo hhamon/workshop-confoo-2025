@@ -7,6 +7,7 @@ namespace App\Entity;
 use App\Repository\DoctrineHealthSpecialistRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: DoctrineHealthSpecialistRepository::class)]
@@ -14,6 +15,7 @@ class HealthSpecialist
 {
     #[ORM\Id]
     #[ORM\Column(type: Types::GUID)]
+    #[Groups(['medical_appointment:read'])]
     private string $id;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -50,6 +52,7 @@ class HealthSpecialist
         return Uuid::fromString($this->id);
     }
 
+    #[Groups(['medical_appointment:read'])]
     public function getFullName(): string
     {
         return $this->firstName . ' ' . $this->lastName;

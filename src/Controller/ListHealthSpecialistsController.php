@@ -25,10 +25,14 @@ final class ListHealthSpecialistsController extends AbstractController
     )]
     public function __invoke(): Response
     {
+        // TODO: refactor with a criteria object
+
         $healthSpecialists = $this->healthSpecialistRepository->findBy(
             criteria: [],
             orderBy: ['specialty' => 'ASC', 'firstName' => 'ASC', 'lastName' => 'ASC'],
         );
+
+        // TODO: refactor within a dedicated service object
 
         $specialties = [];
         foreach ($healthSpecialists as $healthSpecialist) {

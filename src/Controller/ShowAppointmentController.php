@@ -31,6 +31,8 @@ final class ShowAppointmentController extends AbstractController
             throw $this->createNotFoundException(\sprintf('Medical appointment %s not found.', $id));
         }
 
+        // TODO: prevent from accessing the appointment details when it's expired
+
         return $this->render('appointment/show.html.twig', [
             'appointment' => $appointment,
             'specialist' => $appointment->getPractitioner(),

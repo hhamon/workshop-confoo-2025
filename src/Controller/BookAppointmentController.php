@@ -59,6 +59,7 @@ final class BookAppointmentController extends AbstractController
             ->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // TODO: refactor using a semantic constructor
             $appointment = new MedicalAppointment(
                 $availability->getPractitioner(),
                 $availability->getOpeningAt(),
@@ -89,6 +90,7 @@ final class BookAppointmentController extends AbstractController
         ]);
     }
 
+    // TODO: refactor within a dedicated service class
     private function generateReferenceNumber(): string
     {
         $chars = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';

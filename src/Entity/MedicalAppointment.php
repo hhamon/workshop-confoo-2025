@@ -10,6 +10,8 @@ use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use InvalidArgumentException;
+use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Serializer\Attribute\SerializedName;
 use Symfony\Component\Uid\Uuid;
 
 use function Symfony\Component\String\u;
@@ -23,6 +25,7 @@ class MedicalAppointment
 {
     #[ORM\Id]
     #[ORM\Column(type: Types::GUID)]
+    #[Groups(['medical_appointment:read'])]
     private string $id;
 
     #[ORM\ManyToOne]
@@ -36,6 +39,7 @@ class MedicalAppointment
     private DateTimeImmutable $closingAt;
 
     #[ORM\Column(type: Types::TEXT, nullable: false)]
+    #[Groups(['medical_appointment:read'])]
     private string $referenceNumber;
 
     #[ORM\Column(type: Types::TEXT, nullable: false)]
@@ -51,13 +55,19 @@ class MedicalAppointment
     private string $foldedLastName;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['medical_appointment:read'])]
     private ?string $email = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['medical_appointment:read'])]
     private ?string $phone = null;
 
     #[ORM\Column(nullable: false)]
+    #[Groups(['medical_appointment:read'])]
     private DateTimeImmutable $createdAt;
+
+    // TODO: add semantic constructor to build a medical appointment from a practitioner and availability objects
+    // TODO: check that practitioner is available and availability is open
 
     public function __construct(
         HealthSpecialist $practitioner,
@@ -85,6 +95,37 @@ class MedicalAppointment
     public function getPractitioner(): HealthSpecialist
     {
         return $this->practitioner;
+    }
+
+    #[SerializedName('doctor')]
+    #[Groups(['medical_appointment:read'])]
+    public function getPractitionerName(): string
+    {
+        return $this->practitioner->getFullName();
+    }
+
+    #[Groups(['medical_appointment:read'])]
+    public function getSpecialty(): MedicalSpecialty
+    {
+        return $this->practitioner->getSpecialty();
+    }
+
+    #[Groups(['medical_appointment:read'])]
+    public function getPatient(): string
+    {
+        return $this->getFirstName() . ' ' . $this->getLastName();
+    }
+
+    #[Groups(['medical_appointment:read'])]
+    public function getDate(): string
+    {
+        return $this->openingAt->format('Y-m-d');
+    }
+
+    #[Groups(['medical_appointment:read'])]
+    public function getTime(): string
+    {
+        return $this->openingAt->format('H:i');
     }
 
     public function getOpeningAt(): DateTimeInterface
