@@ -136,6 +136,21 @@ final class MedicalAppointmentFactory extends PersistentProxyObjectFactory
     {
         return $this
             ->beforeInstantiate(function(array $parameters, string $class, self $factory): array {
+                $openingAt = $parameters['openingAt'] ?? null;
+
+                if (\is_string($openingAt)) {
+                    $parameters['openingAt'] = new DateTimeImmutable($openingAt);
+                }
+
+                $closingAt = $parameters['closingAt'] ?? null;
+
+                if (\is_string($closingAt)) {
+                    $parameters['closingAt'] = new DateTimeImmutable($closingAt);
+                }
+
+                return $parameters;
+            })
+            ->beforeInstantiate(function(array $parameters, string $class, self $factory): array {
                 $cancelledAt = $parameters['cancelledAt'] ?? null;
 
                 if (\is_string($cancelledAt)) {
