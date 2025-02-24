@@ -117,8 +117,9 @@ class MedicalAppointment
         return $this->practitioner->getSpecialty();
     }
 
+    #[SerializedName('patient')]
     #[Groups(['medical_appointment:read'])]
-    public function getPatient(): string
+    public function getFullName(): string
     {
         return $this->getFirstName() . ' ' . $this->getLastName();
     }

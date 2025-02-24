@@ -6,7 +6,7 @@ namespace App\Controller\Api;
 
 use App\Api\MedicalAppointment\AppointmentCancellation;
 use App\Entity\MedicalAppointment;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\CancelAppointment;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class PostAppointmentsCancellationController extends AbstractController
 {
     public function __construct(
-        private readonly EntityManagerInterface $entityManager,
+        private readonly CancelAppointment $cancelAppointment,
         private readonly ValidatorInterface $validator,
     ) {
     }
@@ -45,9 +45,7 @@ class PostAppointmentsCancellationController extends AbstractController
             return $this->json($violations, status: Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $appointment->cancel($cancellation->getAt(), $cancellation->getReason());
-
-        $this->entityManager->flush();
+        $this->cancelAppointment->cancel($appointment, $cancellation->getReason());
 
         return $this->json($appointment, status: 201, context: [
             ObjectNormalizer::GROUPS => ['medical_appointment:read'],

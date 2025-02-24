@@ -19,7 +19,7 @@ final class ShowAppointmentController extends AbstractController
 
     #[Route(
         path: '/appointments/{id}',
-        name: 'app_appointment_confirmation_show',
+        name: 'app_appointment_show',
         defaults: ['section' => 'health_specialist'],
         methods: ['GET'],
     )]
