@@ -33,6 +33,11 @@ See https://php.watch/articles/php-code-coverage-comparison
 - See https://github.com/zenstruck/foundry
 - See https://github.com/nelmio/alice
 
+### Mailer Testing
+
+- See https://symfony.com/doc/current/mailer.html#write-a-functional-test
+- See https://github.com/zenstruck/mailer-test
+
 ### Exercises
 
 * Add integration tests for the `DoctrineMedicalAppointmentRepository` repository class
