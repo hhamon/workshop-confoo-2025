@@ -44,6 +44,18 @@ final class MedicalAppointmentFactory extends PersistentProxyObjectFactory
         });
     }
 
+    public function tomorrow(string $openingTime, string $closingTime): self
+    {
+        return $this->with(static function () use ($openingTime, $closingTime): array {
+            $tomorrow = (new DateTimeImmutable('tomorrow'))->format('Y-m-d');
+
+            return [
+                'openingAt' => new DateTimeImmutable($tomorrow . ' ' . $openingTime),
+                'closingAt' => new DateTimeImmutable($tomorrow . ' ' . $closingTime),
+            ];
+        });
+    }
+
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories
      *
