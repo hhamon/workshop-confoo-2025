@@ -42,6 +42,7 @@
     </listeners>
 
     <extensions>
+        <extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension" />
         <extension class="Zenstruck\Browser\Test\BrowserExtension" />
         <extension class="Symfony\Component\Panther\ServerExtension" />
     </extensions>
