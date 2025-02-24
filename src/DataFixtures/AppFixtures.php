@@ -5,13 +5,9 @@ declare(strict_types=1);
 namespace App\DataFixtures;
 
 use App\Entity\Agenda;
-use App\Entity\AgendaSlot;
-use App\Entity\AgendaSlotStatus;
 use App\Entity\HealthSpecialist;
 use App\Entity\MedicalSpecialty;
-use DateInterval;
-use DatePeriod;
-use DateTimeImmutable;
+use App\Service\GenerateAgendaCalendar;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -21,106 +17,9 @@ final class AppFixtures extends Fixture
 {
     private static ?Faker $faker = null;
 
-    private const array DAILY_AGENDA_SLOTS = [
-        ['08:30', '09:00'],
-        ['09:00', '09:30'],
-        ['09:30', '10:00'],
-        ['10:00', '10:30'],
-        ['10:30', '11:00'],
-        ['11:00', '11:30'],
-        ['11:30', '12:00'],
-        ['12:00', '12:30'],
-        ['12:30', '13:00'],
-        ['14:00', '14:30'],
-        ['14:30', '15:00'],
-        ['15:00', '15:30'],
-        ['15:30', '16:00'],
-        ['16:00', '16:30'],
-        ['16:30', '17:00'],
-        ['17:00', '17:30'],
-        ['17:30', '18:00'],
-        ['18:00', '18:30'],
-        ['18:30', '19:00'],
-        ['19:00', '19:30'],
-    ];
-
-    /**
-     * TODO: to be extracted in a utility class and unit tested.
-     */
-    private static function generateCalendar(
-        ObjectManager $manager,
-        Agenda $agenda,
-        string $firstDay,
-        string $lastDay,
-        bool $monday = true,
-        bool $tuesday = true,
-        bool $wednesday = true,
-        bool $thursday = true,
-        bool $friday = true,
-        bool $saturday = true,
-        bool $sunday = true,
-    ): void {
-        $dates = self::getDatesBetween($firstDay, $lastDay, $monday, $tuesday, $wednesday, $thursday, $friday, $saturday, $sunday);
-
-        foreach ($dates as $date) {
-            foreach (self::DAILY_AGENDA_SLOTS as $slot) {
-                $manager->persist(
-                    AgendaSlot::create(
-                        agenda: $agenda,
-                        status: self::faker()->randomElement(AgendaSlotStatus::cases()),
-                        openingAt: $date->format('Y-m-d ') . $slot[0],
-                        closingAt: $date->format('Y-m-d ') . $slot[1],
-                    ),
-                );
-            }
-        }
-    }
-
-    /**
-     * TODO: to be extracted in a utility class and unit tested.
-     *
-     * @return DateTimeImmutable[]
-     */
-    private static function getDatesBetween(
-        string $firstDay,
-        string $lastDay,
-        bool $monday = true,
-        bool $tuesday = true,
-        bool $wednesday = true,
-        bool $thursday = true,
-        bool $friday = true,
-        bool $saturday = true,
-        bool $sunday = true,
-    ): array {
-        $interval = new DateInterval('P1D');
-
-        $period = new DatePeriod(
-            new DateTimeImmutable($firstDay),
-            $interval,
-            (new DateTimeImmutable($lastDay))->add($interval), // Add +1 day to include the last day
-        );
-
-        $dates = [];
-        foreach ($period as $date) {
-            $keep = match ($date->format('N')) {
-                '1' => $monday,
-                '2' => $tuesday,
-                '3' => $wednesday,
-                '4' => $thursday,
-                '5' => $friday,
-                '6' => $saturday,
-                '7' => $sunday,
-                default => false,
-            };
-
-            if (!$keep) {
-                continue;
-            }
-
-            $dates[] =  $date;
-        }
-
-        return $dates;
+    public function __construct(
+        private readonly GenerateAgendaCalendar $generateAgendaCalendar,
+    ) {
     }
 
     public function load(ObjectManager $manager): void
@@ -180,12 +79,12 @@ final class AppFixtures extends Fixture
 
         $manager->flush();
 
-        self::generateCalendar($manager, $agenda1, '+5 days', '+2 months', saturday: false, sunday: false);
-        self::generateCalendar($manager, $agenda2, 'today', '+1 months', wednesday: false, thursday: false);
-        self::generateCalendar($manager, $agenda3, '+4 months', '+4 months', monday: false, sunday: false);
-        self::generateCalendar($manager, $agenda4, 'today', '+2 months', monday: false, saturday: false, sunday: false);
-        self::generateCalendar($manager, $agenda5, 'today', '+1 months', tuesday: false, wednesday: false, sunday: false);
-        self::generateCalendar($manager, $agenda6, 'today', '+4 months', friday: false, sunday: false);
+        $this->generateAgendaCalendar->generateCalendarFor($agenda1, '+5 days', '+2 months', saturday: false, sunday: false);
+        $this->generateAgendaCalendar->generateCalendarFor($agenda2, 'today', '+1 months', wednesday: false, thursday: false);
+        $this->generateAgendaCalendar->generateCalendarFor($agenda3, '+4 months', '+4 months', monday: false, sunday: false);
+        $this->generateAgendaCalendar->generateCalendarFor($agenda4, 'today', '+2 months', monday: false, saturday: false, sunday: false);
+        $this->generateAgendaCalendar->generateCalendarFor($agenda5, 'today', '+1 months', tuesday: false, wednesday: false, sunday: false);
+        $this->generateAgendaCalendar->generateCalendarFor($agenda6, 'today', '+4 months', friday: false, sunday: false);
 
         $manager->flush();
 
