@@ -45,13 +45,22 @@ See https://php.watch/articles/php-code-coverage-comparison
 * Test the `DoctrineMedicalAppointmentRepository` repository methods
 * Test the `CancelAppointment` service class
 
-## Behavioral Testing
+## Functional Api Testing
 
+- See https://symfony.com/doc/current/testing.html#application-tests
+- See https://github.com/zenstruck/browser
 
+### Exercises
+
+* Add functional API test case to cancel a scheduled upcoming appointment (with valid reference number and patient's last name)
+* Add functional API test case to cancel a scheduled upcoming appointment (with invalid reference number and patient's last name)
+* Add functional API test case to cancel a scheduled past appointment
+* Add functional API test case to cancel an already cancelled appointment
+* Rewrite these tests using `Zenstruck/Browser` tool
 
 ## Functional Web Testing
 
-
+## Behavioral Testing
 
 ## End-to-End Web Testing
 

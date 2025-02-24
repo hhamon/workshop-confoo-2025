@@ -29,7 +29,7 @@ final class CancelAppointmentTest extends KernelTestCase
     {
         // Arrange: seed the database with a scheduled upcoming appointment
         $appointment = MedicalAppointmentFactory::new([])
-            ->tomorrow('10:00', '11:30')
+            ->tomorrowAt('10:00', '11:30')
             ->create([
                 'firstName' => 'John',
                 'lastName' => 'Smith',

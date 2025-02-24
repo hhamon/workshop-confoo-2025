@@ -42,6 +42,7 @@
     </listeners>
 
     <extensions>
+        <extension class="Zenstruck\Browser\Test\BrowserExtension" />
         <extension class="Symfony\Component\Panther\ServerExtension" />
     </extensions>
 </phpunit>

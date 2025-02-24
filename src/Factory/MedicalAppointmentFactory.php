@@ -44,16 +44,65 @@ final class MedicalAppointmentFactory extends PersistentProxyObjectFactory
         });
     }
 
-    public function tomorrow(string $openingTime, string $closingTime): self
+    public function tomorrowAt(string $openingTime, ?string $closingTime = null): self
     {
         return $this->with(static function () use ($openingTime, $closingTime): array {
             $tomorrow = (new DateTimeImmutable('tomorrow'))->format('Y-m-d');
 
+            $openingAt = new DateTimeImmutable($tomorrow . ' ' . $openingTime);
+
+            $closingAt = $closingTime === null
+                ? $openingAt->modify('+30 minutes')
+                : new DateTimeImmutable($tomorrow . ' ' . $closingTime);
+
             return [
-                'openingAt' => new DateTimeImmutable($tomorrow . ' ' . $openingTime),
-                'closingAt' => new DateTimeImmutable($tomorrow . ' ' . $closingTime),
+                'openingAt' => $openingAt,
+                'closingAt' => $closingAt,
             ];
         });
+    }
+
+    public function yesterdayAt(string $openingTime, ?string $closingTime = null): self
+    {
+        return $this->with(static function () use ($openingTime, $closingTime): array {
+            $yesterday = (new DateTimeImmutable('yesterday'))->format('Y-m-d');
+
+            $openingAt = new DateTimeImmutable($yesterday . ' ' . $openingTime);
+
+            $closingAt = $closingTime === null
+                ? $openingAt->modify('+30 minutes')
+                : new DateTimeImmutable($yesterday . ' ' . $closingTime);
+
+            return [
+                'openingAt' => $openingAt,
+                'closingAt' => $closingAt,
+            ];
+        });
+    }
+
+    private function scheduledOn(string $date, string $openingTime, string $closingTime): self
+    {
+        return $this->with(static function () use ($date, $openingTime, $closingTime): array {
+            $date = (new DateTimeImmutable($date))->format('Y-m-d');
+
+            return [
+                'openingAt' => new DateTimeImmutable($date . ' ' . $openingTime),
+                'closingAt' => new DateTimeImmutable($date . ' ' . $closingTime),
+            ];
+        });
+    }
+
+    public function forPatient(string $firstName, string $lastName): self
+    {
+        return $this->with([
+            'firstName' => $firstName,
+            'lastName' => $lastName,
+        ]);
+    }
+
+    public function scheduled(string $referenceNumber): self
+    {
+        return $this->with(['referenceNumber' => $referenceNumber]);
     }
 
     /**
