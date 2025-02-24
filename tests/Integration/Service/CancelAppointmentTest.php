@@ -8,7 +8,6 @@ use App\Factory\MedicalAppointmentFactory;
 use App\Service\CancelAppointment;
 use DateTimeInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\Clock\DatePoint;
 use Zenstruck\Foundry\Test\Factories;
 use Zenstruck\Foundry\Test\ResetDatabase;
 
@@ -45,6 +44,9 @@ final class CancelAppointmentTest extends KernelTestCase
         self::assertSame('I found one earlier.', $appointment->getCancellationReason());
 
         // Assert: check the confirmation email has been sent
+        $this->assertEmailCount(1);
+        $this->assertEmailSubjectContains($this->getMailerMessage(0), 'Your appointment has been cancelled');
+
         // Assert: check one enqueued message dispatched in the message bus
     }
 
