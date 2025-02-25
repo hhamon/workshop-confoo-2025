@@ -47,14 +47,13 @@ class CancelAppointmentTest extends KernelTestCase
         self::assertSame('I found one earlier.', $appointment->getCancellationReason());
 
         // Assert: check the confirmation email has been sent
-        $this->assertEmailCount(1);
-        $this->assertEmailHeaderSame($this->getMailerMessage(0), 'To', 'John Smith <user@example.com>');
-        $this->assertEmailSubjectContains($this->getMailerMessage(0), 'Your appointment has been cancelled');
+        //$this->assertEmailCount(1);
+        //$this->assertEmailHeaderSame($this->getMailerMessage(0), 'To', 'John Smith <user@example.com>');
+        //$this->assertEmailSubjectContains($this->getMailerMessage(0), 'Your appointment has been cancelled');
 
-        /*$this->mailer()
+        $this->mailer()
             ->assertSentEmailCount(1)
             ->assertEmailSentTo('user@example.com', 'Your appointment has been cancelled');
-*/
 
         // Assert: check one enqueued message dispatched in the message bus
     }
