@@ -38,27 +38,27 @@ class MedicalAppointment
     #[ORM\Column(nullable: false)]
     private DateTimeImmutable $closingAt;
 
-    #[ORM\Column(type: Types::TEXT, nullable: false)]
+    #[ORM\Column(type: Types::STRING, nullable: false)]
     #[Groups(['medical_appointment:read'])]
     private string $referenceNumber;
 
-    #[ORM\Column(type: Types::TEXT, nullable: false)]
+    #[ORM\Column(type: Types::STRING, nullable: false)]
     private string $firstName;
 
-    #[ORM\Column(type: Types::TEXT, nullable: false)]
+    #[ORM\Column(type: Types::STRING, nullable: false)]
     private string $foldedFirstName;
 
-    #[ORM\Column(type: Types::TEXT, nullable: false)]
+    #[ORM\Column(type: Types::STRING, nullable: false)]
     private string $lastName;
 
-    #[ORM\Column(type: Types::TEXT, nullable: false)]
+    #[ORM\Column(type: Types::STRING, nullable: false)]
     private string $foldedLastName;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::STRING)]
     #[Groups(['medical_appointment:read'])]
     private ?string $email = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::STRING)]
     #[Groups(['medical_appointment:read'])]
     private ?string $phone = null;
 
@@ -70,7 +70,7 @@ class MedicalAppointment
     #[Groups(['medical_appointment:read'])]
     private ?DateTimeImmutable $cancelledAt = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $cancellationReason = null;
 
     // TODO: add semantic constructor to build a medical appointment from a practitioner and availability objects

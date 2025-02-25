@@ -19,22 +19,22 @@ class HealthSpecialist implements Stringable
     #[Groups(['medical_appointment:read'])]
     private string $id;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::STRING)]
     private readonly string $firstName;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::STRING)]
     private readonly string $lastName;
 
-    #[ORM\Column(type: Types::TEXT, enumType: MedicalSpecialty::class)]
+    #[ORM\Column(type: Types::STRING, enumType: MedicalSpecialty::class)]
     private MedicalSpecialty $specialty;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $introduction = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $biography = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $profilePictureUrl = null;
 
     public function __construct(
