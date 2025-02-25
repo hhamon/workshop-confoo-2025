@@ -107,6 +107,23 @@
         "build:frontend-prod": [
             "@php bin/console tailwind:build --minify --env prod",
             "@php bin/console asset-map:compile --env prod"
+        ],
+        "test:all": [
+            "@build:database-test",
+            "@build:frontend-test",
+            "@php vendor/bin/paratest --processes=2 --runner=WrapperRunner"
+        ],
+        "test:unit": [
+            "@php bin/phpunit tests/Unit"
+        ],
+        "test:integration": [
+            "@php bin/phpunit tests/Integration --no-coverage"
+        ],
+        "test:functional": [
+            "@php bin/phpunit tests/Functional"
+        ],
+        "test:behat": [
+            "@php vendor/bin/behat"
         ]
     },
     "conflict": {

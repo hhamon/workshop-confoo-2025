@@ -1,3 +1,6 @@
+parameters:
+    test_token: 1
+
 doctrine:
     dbal:
         url: '%env(resolve:DATABASE_URL)%'

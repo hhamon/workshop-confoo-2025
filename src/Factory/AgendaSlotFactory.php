@@ -4,8 +4,10 @@ namespace App\Factory;
 
 use App\Entity\AgendaSlot;
 use App\Entity\AgendaSlotStatus;
+use App\Entity\HealthSpecialist;
 use DateTimeImmutable;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+use Zenstruck\Foundry\Persistence\Proxy;
 
 /**
  * @extends PersistentProxyObjectFactory<AgendaSlot>
@@ -50,6 +52,29 @@ final class AgendaSlotFactory extends PersistentProxyObjectFactory
     public static function class(): string
     {
         return AgendaSlot::class;
+    }
+
+    /**
+     * @param Proxy<HealthSpecialist> $specialist
+     */
+    public function specialist(Proxy $specialist): self
+    {
+        return $this->with(static fn (): array => [
+            'agenda' => AgendaFactory::find(['owner' => $specialist]),
+        ]);
+    }
+
+    public function availableOn(string $date, string $time, string $duration): self
+    {
+        return $this->with(static function () use ($date, $time, $duration): array {
+            $openingAt = new DateTimeImmutable($date . ' ' . $time);
+
+            return [
+                'openingAt' => $openingAt,
+                'closingAt' => $openingAt->modify('+' . $duration),
+                'status' => AgendaSlotStatus::OPEN,
+            ];
+        });
     }
 
     /**
