@@ -39,6 +39,18 @@ class AgendaSlot
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeImmutable $updatedAt;
 
+    public static function createOpenFromInterval(Agenda $agenda, string $openingAt, string $duration): self
+    {
+        if (!preg_match('/^\d{2,} (minutes|hours)$/', $duration)) {
+            throw new InvalidArgumentException('Invalid duration: ' . $duration);
+        }
+
+        $openingAt = new DateTimeImmutable($openingAt);
+        $closingAt = $openingAt->modify('+' . $duration);
+
+        return new self($agenda, AgendaSlotStatus::OPEN, $openingAt, $closingAt);
+    }
+
     public static function createOpen(Agenda $agenda, string $openingAt, string $closingAt): self
     {
         return self::create($agenda, AgendaSlotStatus::OPEN, $openingAt, $closingAt);
