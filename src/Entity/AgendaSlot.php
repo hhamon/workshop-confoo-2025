@@ -30,7 +30,7 @@ class AgendaSlot
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private readonly DateTimeImmutable $closingAt;
 
-    #[ORM\Column(type: Types::TEXT, enumType: AgendaSlotStatus::class)]
+    #[ORM\Column(type: Types::STRING, enumType: AgendaSlotStatus::class)]
     private AgendaSlotStatus $status;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
