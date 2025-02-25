@@ -60,11 +60,24 @@ See https://php.watch/articles/php-code-coverage-comparison
 
 ## Functional Web Testing
 
+### Exercises
+
+* Add functional web test for booking an appointment
+* Add functional web test for searching an appointment availability on a date
+* Add functional web test for cancelling a booked appointment
+
 ## Behavioral Testing
 
 ## End-to-End Web Testing
 
+- See https://github.com/dmaicher/doctrine-test-bundle/issues/182
+- See https://www.zenrows.com/blog/panther-web-scraping
 
+### Exercises
+
+* Add E2E test for booking an appointment
+* Add E2E test for searching an appointment availability on a date
+* Add E2E test for cancelling a booked appointment
 
 ## Running Tests in Parallel
 

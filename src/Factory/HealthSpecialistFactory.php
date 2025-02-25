@@ -47,6 +47,7 @@ final class HealthSpecialistFactory extends PersistentProxyObjectFactory
             'specialty' => self::faker()->randomElement(MedicalSpecialty::cases()),
             'introduction' => self::faker()->text(maxNbChars: 164),
             'biography' => self::faker()->paragraphs(self::faker()->numberBetween(2, 6), asText: true),
+            'profilePictureUrl' => self::faker()->randomElement(self::PROFILE_PICTURE_URLS),
         ];
     }
 
