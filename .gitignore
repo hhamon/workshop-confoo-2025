@@ -8,6 +8,9 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
+/build/
+/drivers/
+
 ###> symfony/asset-mapper ###
 /public/assets/
 /assets/vendor/
@@ -16,3 +19,17 @@
 ###> phpstan/phpstan ###
 phpstan.neon
 ###< phpstan/phpstan ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
+
+###> friends-of-behat/symfony-extension ###
+/behat.yml
+###< friends-of-behat/symfony-extension ###
+
+###> symfony/phpunit-bridge ###
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###
