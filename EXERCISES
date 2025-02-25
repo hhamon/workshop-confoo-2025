@@ -1,0 +1,103 @@
+# Course
+
+## Refactoring
+
+### Exercises
+
+* Leverage semantic / named class constructors
+* Leverage PHP enums
+* Leverage PHP interfaces
+
+## Unit Testing
+
+### Code Coverage
+
+See https://php.watch/articles/php-code-coverage-comparison
+
+### Time Mocking
+
+### Exercises
+
+* Add unit tests suite for the `MedicalAppointment` entity class
+* Prevent an expired appointment from being booked
+* Test when an appointment is scheduled (upcoming), past, or cancelled
+* Add in-memory repository implementation for testing
+* Create a service class for generating unique appointment reference numbers
+* Mock the database dependency in the appointment reference generator class
+
+
+## Integration Testing
+
+### Database Seeding
+
+- See https://github.com/zenstruck/foundry
+- See https://github.com/nelmio/alice
+
+### Mailer Testing
+
+- See https://symfony.com/doc/current/mailer.html#write-a-functional-test
+- See https://github.com/zenstruck/mailer-test
+
+### Exercises
+
+* Add integration tests for the `DoctrineMedicalAppointmentRepository` repository class
+* Seed the test database with appointments using Foundry
+* Test the `DoctrineMedicalAppointmentRepository` repository methods
+* Test the `CancelAppointment` service class
+
+## Functional Api Testing
+
+- See https://symfony.com/doc/current/testing.html#application-tests
+- See https://github.com/zenstruck/browser
+
+### Exercises
+
+* Add functional API test case to cancel a scheduled upcoming appointment (with valid reference number and patient's last name)
+* Add functional API test case to cancel a scheduled upcoming appointment (with invalid reference number and patient's last name)
+* Add functional API test case to cancel a scheduled past appointment
+* Add functional API test case to cancel an already cancelled appointment
+* Rewrite these tests using `Zenstruck/Browser` tool
+
+## Functional Web Testing
+
+### Exercises
+
+* Add functional web test for booking an appointment
+* Add functional web test for searching an appointment availability on a date
+* Add functional web test for cancelling a booked appointment
+
+## Behavioral Testing
+
+## End-to-End Web Testing
+
+- See https://github.com/dmaicher/doctrine-test-bundle/issues/182
+- See https://www.zenrows.com/blog/panther-web-scraping
+
+### Exercises
+
+* Add E2E test for booking an appointment
+* Add E2E test for searching an appointment availability on a date
+* Add E2E test for cancelling a booked appointment
+
+## Running Tests in Parallel
+
+
+
+
+
+
+
+
+
+
+
+* Add Doctrine repository integration test
+* Add Panther test for booking an appointment
+* Add Panther test for fetching list of appointments
+* Add Panther test for cancelling an appointment
+* Add Behat functional test for booking an appointment
+* Assert that email is sent when an appointment is booked
+* Run E2E tests in parallel with ParaTest?
+
+symfony open:local:webmail
+

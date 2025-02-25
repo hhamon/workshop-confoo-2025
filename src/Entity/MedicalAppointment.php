@@ -222,6 +222,11 @@ class MedicalAppointment
         return $this->createdAt;
     }
 
+    public function isCancelled(): bool
+    {
+        return $this->cancelledAt instanceof DateTimeInterface;
+    }
+
     public function getCancelledAt(): ?DateTimeImmutable
     {
         return $this->cancelledAt;
