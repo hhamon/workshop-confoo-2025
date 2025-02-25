@@ -238,4 +238,9 @@ class MedicalAppointment
         $this->cancelledAt = $cancelledAt ?? new DateTimeImmutable();
         $this->cancellationReason = $reason !== '' ? $reason : null;
     }
+
+    public function isCancelled(): bool
+    {
+        return $this->cancelledAt instanceof DateTimeInterface;
+    }
 }
