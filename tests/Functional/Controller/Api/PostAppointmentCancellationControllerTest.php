@@ -34,28 +34,6 @@ final class PostAppointmentCancellationControllerTest extends WebTestCase
 
         self::ensureKernelShutdown();
 
-        $client = static::createClient();
-        $client->setServerParameter('HTTP_ACCEPT', 'application/json');
-        $client->setServerParameter('HTTP_CONTENT_TYPE', 'application/json');
-
-        $client->request(
-            method: 'POST',
-            uri: '/api/appointments/' . $appointment->getId() .'/cancellation',
-            content: \json_encode([
-                'referenceNumber' => 'E4N6ST',
-                'lastName' => 'SMITH',
-                'reason' => 'I booked another one earlier.',
-            ]),
-        );
-
-        self::assertResponseIsSuccessful();
-
-        $payload = \json_decode($client->getResponse()->getContent(), flags: \JSON_OBJECT_AS_ARRAY | \JSON_THROW_ON_ERROR);
-
-        self::assertArrayHasKey('cancelledAt', $payload);
-        self::assertSame($payload['cancelledAt'], $appointment->getCancelledAt()?->format('c'));
-
-        /*
         $this->browser()
             ->withProfiling()
             ->post(
@@ -73,7 +51,6 @@ final class PostAppointmentCancellationControllerTest extends WebTestCase
                 $component->assertSentEmailCount(1);
             })
         ;
-        */
 
         // Assert: check the appointment is cancelled in the database
         MedicalAppointmentFactory::assert()->count(1, [
