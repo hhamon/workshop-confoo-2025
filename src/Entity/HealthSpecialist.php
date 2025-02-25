@@ -99,9 +99,9 @@ class HealthSpecialist implements Stringable
         $this->biography = $biography;
     }
 
-    public function getProfilePictureUrl(): ?string
+    public function getProfilePictureUrl(): string
     {
-        return $this->profilePictureUrl;
+        return (string) $this->profilePictureUrl;
     }
 
     public function setProfilePictureUrl(?string $profilePictureUrl): void

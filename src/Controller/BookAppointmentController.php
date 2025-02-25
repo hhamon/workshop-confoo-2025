@@ -10,6 +10,7 @@ use App\Entity\MedicalAppointment;
 use App\Form\MedicalAppointmentBookingType;
 use App\Model\MedicalAppointmentBooking;
 use App\Repository\DoctrineAgendaSlotRepository;
+use App\Service\AppointmentReferenceGenerator;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,6 +23,7 @@ final class BookAppointmentController extends AbstractController
 {
     public function __construct(
         private readonly DoctrineAgendaSlotRepository $agendaSlotRepository,
+        private readonly AppointmentReferenceGenerator $referenceGenerator,
         private readonly EntityManagerInterface $entityManager,
     ) {
     }
@@ -64,7 +66,7 @@ final class BookAppointmentController extends AbstractController
                 $availability->getPractitioner(),
                 $availability->getOpeningAt(),
                 $availability->getClosingAt(),
-                $this->generateReferenceNumber(),
+                $this->referenceGenerator->generate(),
                 $dto->getFirstName(),
                 $dto->getLastName(),
             );
@@ -88,22 +90,5 @@ final class BookAppointmentController extends AbstractController
             'specialist' => $availability->getPractitioner(),
             'form' => $form->createView(),
         ]);
-    }
-
-    // TODO: refactor within a dedicated service class
-    private function generateReferenceNumber(): string
-    {
-        $chars = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
-        $chars = \str_shuffle($chars);
-
-        $limit = \strlen($chars) - 1;
-        $referenceNumber = '';
-        for ($i = 1; $i <= 6; $i++) {
-            $referenceNumber .= $chars[\random_int(0, $limit)];
-        }
-
-        // TODO: check if the reference number already exists in the database
-
-        return $referenceNumber;
     }
 }

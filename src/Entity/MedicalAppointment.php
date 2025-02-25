@@ -38,7 +38,7 @@ class MedicalAppointment
     #[ORM\Column(nullable: false)]
     private DateTimeImmutable $closingAt;
 
-    #[ORM\Column(type: Types::TEXT, nullable: false)]
+    #[ORM\Column(nullable: false)]
     #[Groups(['medical_appointment:read'])]
     private string $referenceNumber;
 
@@ -237,5 +237,10 @@ class MedicalAppointment
         // TODO: check appointment is not already cancelled
         $this->cancelledAt = $cancelledAt ?? new DateTimeImmutable();
         $this->cancellationReason = $reason !== '' ? $reason : null;
+    }
+
+    public function isCancelled(): bool
+    {
+        return $this->cancelledAt instanceof DateTimeInterface;
     }
 }
